@@ -1,0 +1,19 @@
+plugins {
+    id 'java'
+}
+
+group 'com.ultralesson'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation group: 'org.testng', name: 'testng', version: '7.9.0'
+
+}
+
+test{
+    useTestNG()
+}

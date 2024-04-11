@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<!--runs all the test classes-->
+<suite name="suite">
+    <listeners>
+        <listener class-name="com.ultralesson.eventplanner.TestReport"></listener>
+    </listeners>
+    <test name="test1">
+        <classes>
+            <class name="com.ultralesson.eventplanner.AttendeeTest"/>
+            <class name="com.ultralesson.eventplanner.EventTest"/>
+            <class name="com.ultralesson.eventplanner.VenueTest"/>
+        </classes>
+    </test>
+</suite>
+<!--________________________________________________________________________-->
+<!--runs the test methods which are grouped under creation-->
+<!--<suite name="Tests">-->
+<!--    <test name="CreationTests">-->
+<!--        <groups>-->
+<!--            <run>-->
+<!--                <include name="creation"/>-->
+<!--            </run>-->
+<!--        </groups>-->
+<!--        <classes>-->
+<!--            <class name="com.ultralesson.eventplanner.AttendeeTest"/>-->
+<!--            <class name="com.ultralesson.eventplanner.EventTest"/>-->
+<!--            <class name="com.ultralesson.eventplanner.VenueTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+<!--</suite>-->
+<!--________________________________________________________________________-->
+<!--runs the test methods which are grouped under creation and are subgrouped and given priority-->
+<!--<suite name="Tests">-->
+<!--<test name="CreationTestsWithPriority">-->
+<!--    <groups>-->
+<!--        <run>-->
+<!--            <include name="creation"/>-->
+<!--            <include name="EventCreation"/>-->
+<!--            <include name="VenueCreation"/>-->
+<!--            <include name="attendeeCreation"/>-->
+
+<!--        </run>-->
+<!--    </groups>-->
+<!--    <classes>-->
+<!--        <class name="com.ultralesson.eventplanner.AttendeeTest"/>-->
+<!--        <class name="com.ultralesson.eventplanner.EventTest"/>-->
+<!--        <class name="com.ultralesson.eventplanner.VenueTest"/>-->
+<!--    </classes>-->
+<!--</test>-->
+<!--</suite>-->

@@ -1,40 +1,88 @@
 package com.ultralesson.eventplanner;
 
 import com.ultralesson.eventplanner.model.Attendee;
+import com.ultralesson.eventplanner.model.Event;
+import com.ultralesson.eventplanner.model.Venue;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class AttendeeTest {
 
     private Attendee attendee;
+
     @BeforeMethod
-    public void setUp(){
-        attendee=new Attendee(1,"Om","om.shinde@gmail.com");
-        System.out.println("1");
+    public void setUp() {
+        attendee = new Attendee(1, "Om", "om.shinde@gmail.com");
     }
+
     @AfterMethod
-    public void emptyObject(){
-        attendee=null;
-        System.out.println("3");
+    public void tearDown() {
+        attendee = null;
     }
-    @Test(groups = {"creation","attendeeCreation"}, priority = 2)
-    public void testAttendeeCreation(){
-        attendee=new Attendee(1,"Om","om.shinde@gmail.com");
-        Assert.assertNotNull(attendee,"No Attendees Present");
-        System.out.println("2");
+
+    @Test(groups = {"creation", "attendeeCreation"}, priority = 1)
+    public void testAttendeeCreation() {
+        Assert.assertNotNull(attendee, "Attendee object should not be null.");
     }
+
     @Test
-    public void testValidateAttendeeProperties(){
-        attendee=new Attendee(1,"Om Shinde","om@gmail.com");
-        Assert.assertEquals(attendee.getId(), 1);
-        Assert.assertEquals(attendee.getName(), "Om Shinde");
-        Assert.assertEquals(attendee.getEmail(), "om@gmail.com");
+    public void testValidateAttendeeProperties() {
+        Assert.assertEquals(attendee.getId(), 1, "Attendee ID should match.");
+        Assert.assertEquals(attendee.getName(), "Om", "Attendee name should match.");
+        Assert.assertEquals(attendee.getEmail(), "om.shinde@gmail.com", "Attendee email should match.");
+    }
+
+    @Test
+    public void testAddAttendeeToEvent() {
+        Event event = new Event(1, "Test Event", "Description", new Venue(1, "Venue", "Address", 100));
+        Attendee newAttendee = new Attendee(2, "New Attendee", "new.attendee@example.com");
+        event.addAttendee(newAttendee);
+        Assert.assertTrue(event.getAttendees().contains(newAttendee), "Attendee should be added to the event.");
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testAddInvalidAttendeeToEvent() {
+        Event event = new Event(1, "Test Event", "Description", new Venue(1, "Venue", "Address", 100));
+        Attendee invalidAttendee = new Attendee(3, null, ""); // Invalid attendee details
+        event.addAttendee(invalidAttendee);
+    }
+
+    @Test
+    public void testRemoveAttendeeFromEvent() {
+        Event event = new Event(1, "Test Event", "Description", new Venue(1, "Venue", "Address", 100));
+        Attendee attendeeToRemove = new Attendee(2, "Jane Doe", "jane.doe@example.com");
+        event.addAttendee(attendeeToRemove);
+        event.removeAttendee(attendeeToRemove);
+        Assert.assertFalse(event.getAttendees().contains(attendeeToRemove), "Attendee should be removed from the event.");
+    }
+
+    @Test
+    public void testAddAttendeeToFullCapacityEvent() {
+        Event event = new Event(1, "Full Capacity Event", "Description", new Venue(1, "Venue", "Address", 1));
+        Attendee newAttendee = new Attendee(2, "New Attendee", "new.attendee@example.com");
+        event.addAttendee(newAttendee);
+        Assert.assertTrue(event.getAttendees().contains(newAttendee), "Attendee should be added to the event even if it's at full capacity.");
+    }
+
+    @Test
+    public void testAddAttendeeToNullEvent() {
+        Event event = null;
+        Attendee newAttendee = new Attendee(2, "New Attendee", "new.attendee@example.com");
+        try {
+            event.addAttendee(newAttendee);
+            Assert.fail("Expected NullPointerException");
+        } catch (NullPointerException e) {
+            Assert.assertNull(event, "Event should remain null.");
+        }
+    }
+
+    @Test
+    public void testRemoveNonExistingAttendeeFromEvent() {
+        Event event = new Event(1, "Test Event", "Description", new Venue(1, "Venue", "Address", 100));
+        Attendee nonExistingAttendee = new Attendee(999, "Non Existing Attendee", "nonexisting@example.com");
+        event.removeAttendee(nonExistingAttendee);
+        Assert.assertFalse(event.getAttendees().contains(nonExistingAttendee), "Removing non-existing attendee should not affect the attendee list.");
     }
 }
-
-//The @BeforeMethod annotation is used to mark a method that needs to be executed before each test method.
-//The @AfterMethod annotation signifies that the marked method should be executed after each test method.
-//the best thing to go after the code

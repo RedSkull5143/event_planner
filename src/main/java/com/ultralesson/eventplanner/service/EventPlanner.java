@@ -73,5 +73,11 @@ public class EventPlanner {
     public List<Schedule> getSchedules() {
         return schedules;
     }
+    public void removeVenue(int venueId) {
+        venues.removeIf(venue -> venue.getId() == venueId);
+        // Remove any schedules associated with the removed venue
+        schedules.removeIf(schedule -> schedule.getVenue().getId() == venueId);
+    }
+
 }
 

@@ -70,4 +70,15 @@ public class VenueTest {
         Assert.assertEquals(ep.getVenues().get(0),venue1);
     }
 
+    @Test(description = "remove venue")
+    public void testRemoveVenue(){
+        EventPlanner eventPlanner=new EventPlanner();
+        Venue venue=new Venue(1,"Taj", "Gateway of India",300);
+        eventPlanner.addVenue(venue);
+        eventPlanner.removeVenue(1);
+//        Assert.assertNull(eventPlanner); // returns the instance of event planner
+        Assert.assertFalse(eventPlanner.getVenues().contains(venue));
+//        System.out.println(eventPlanner.getVenues());
+    }
+
 }

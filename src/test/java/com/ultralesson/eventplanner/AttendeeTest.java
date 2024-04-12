@@ -85,4 +85,19 @@ public class AttendeeTest {
         event.removeAttendee(nonExistingAttendee);
         Assert.assertFalse(event.getAttendees().contains(nonExistingAttendee), "Removing non-existing attendee should not affect the attendee list.");
     }
+
+    @Test
+    public void testAddAttendeeToEventSuccess() {
+        Event event = new Event(1, "Conference", "Tech Conference", new Venue(1, "Conference Hall", "City Center", 100));
+        Attendee newAttendee = new Attendee(10, "Alice Bryant", "alice.bryant@example.com");
+        event.addAttendee(newAttendee);
+        Assert.assertTrue(event.getAttendees().contains(newAttendee), "The attendee should be added to the event attendee list.");
+    }
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void testAddAttendeeWithInvalidDetailsToEvent() {
+        Event event = new Event(2, "Workshop", "Coding Workshop", new Venue(2, "Workshop Space", "Tech Park", 50));
+        Attendee invalidAttendee = new Attendee(11, null, "invalid@example.com"); // Invalid attendee details
+        event.addAttendee(invalidAttendee);
+    }
+
 }

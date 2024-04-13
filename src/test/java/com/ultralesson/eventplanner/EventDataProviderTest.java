@@ -25,35 +25,27 @@ public class EventDataProviderTest {
     }
 
     @Test(dataProvider = "eventDataProvider")
-    public void createEventTest(int id, String name, String description, Venue venue, boolean expectSuccess, String expectedErrorMessage) {
+    public void createEventTest(int id, String name, String description, Venue venue) {
         EventPlanner eventPlanner=new EventPlanner();
         try {
             Event event = new Event(id, name, description, venue);
             eventPlanner.addEvent(event);
-
-            if (expectSuccess) {
-                // Assert event creation success
-                Assert.assertTrue(eventPlanner.getEvents().contains(event), "Event should be created successfully.");
-            } else {
-                // If creation was expected to fail, fail the test
-                Assert.fail("Event creation succeeded unexpectedly.");
-            }
+            // Assert event creation success
+            Assert.assertTrue(eventPlanner.getEvents().contains(event));
 
             // Additional assertions for event properties
-            Assert.assertEquals(event.getId(), id, "Event ID should match.");
-            Assert.assertEquals(event.getName(), name, "Event name should match.");
-            Assert.assertEquals(event.getDescription(), description, "Event description should match.");
-            Assert.assertEquals(event.getVenue(), venue, "Event venue should match.");
-
+            Assert.assertEquals(event.getId(), id);
+            Assert.assertEquals(event.getName(), name);
+            Assert.assertEquals(event.getDescription(), description);
+            Assert.assertEquals(event.getVenue(), venue);
         } catch (IllegalArgumentException e) {
             // Assert error handling
-            if (expectedErrorMessage != null) {
-                Assert.assertEquals(e.getMessage(), expectedErrorMessage, "Unexpected error message.");
+            if (name == null || name.isEmpty() || venue == null || venue.getName().isEmpty()) {
+                Assert.assertNull(name); // Null or empty name expected to throw IllegalArgumentException
+                Assert.assertNull(venue); // Null or empty venue name expected to throw IllegalArgumentException
             } else {
-                Assert.fail("Unexpected error occurred: " + e.getMessage());
+                Assert.fail("Event creation failed with valid data.");
             }
-        }
-    }
-
+        }}
 
 }

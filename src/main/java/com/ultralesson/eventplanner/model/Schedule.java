@@ -1,7 +1,10 @@
 package com.ultralesson.eventplanner.model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Schedule {
     private int id;
@@ -11,6 +14,9 @@ public class Schedule {
     private LocalDateTime endTime;
 
     public Schedule(int id, Event event, Venue venue, LocalDateTime startTime, LocalDateTime endTime) {
+        if (!isValidstartTime(startTime)) {
+            throw new IllegalArgumentException("Invalid time format: " + startTime);
+        }
         this.id = id;
         this.event = event;
         this.venue = venue;
@@ -85,5 +91,8 @@ public class Schedule {
                 ", endTime=" + endTime +
                 '}';
     }
+    public boolean isValidstartTime(LocalDateTime startTime){
+        String stringStartTime=startTime.toString();
+        return true;
+    }
 }
-

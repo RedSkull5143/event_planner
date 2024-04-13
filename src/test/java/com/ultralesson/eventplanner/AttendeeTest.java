@@ -69,7 +69,7 @@ public class AttendeeTest {
     @Test
     public void testAddAttendeeToNullEvent() {
         Event event = null;
-        Attendee newAttendee = new Attendee(2, "New Attendee", "new.attendee@example.com");
+        Attendee newAttendee = new Attendee(1, "Om Shinde", "om.shinde@gmail.com");
         try {
             event.addAttendee(newAttendee);
             Assert.fail("Expected NullPointerException");

@@ -22,7 +22,6 @@ public class Event {
         this.venue = venue;
     }
 
-
     public int getId() {
         return id;
     }
@@ -42,11 +41,9 @@ public class Event {
     public void addAttendee(Attendee attendee) {
         attendees.add(attendee);
     }
-
     public void removeAttendee(Attendee attendee) {
         attendees.remove(attendee);
     }
-
     public Venue getVenue() {
         return venue;
     }

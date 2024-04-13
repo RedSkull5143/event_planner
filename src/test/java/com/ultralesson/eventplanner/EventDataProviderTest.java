@@ -49,5 +49,26 @@ public class EventDataProviderTest {
         }
     }
 
+    @Test(dataProvider = "eventDataProvider")
+    public void testEventCreationHandling(int id, String name, String description, Venue venue) {
+        EventPlanner eventPlanner=new EventPlanner();
+        try {
+            Event event = new Event(id, name, description, venue);
+            eventPlanner.addEvent(event);
+            // Assert event creation success
+            if (name != null && !name.isEmpty() && venue != null && venue.getName() != null && !venue.getName().isEmpty()) {
+                Assert.assertTrue(eventPlanner.getEvents().contains(event), "Event creation should succeed for valid data.");
+            }
+        } catch (IllegalArgumentException e) {
+            // Assert error handling
+            if (name == null || name.isEmpty() || venue == null || venue.getName().isEmpty()) {
+                Assert.assertNull(name, "Null or empty name should throw IllegalArgumentException.");
+                Assert.assertNull(venue, "Null or empty venue name should throw IllegalArgumentException.");
+            } else {
+                Assert.fail("Event creation failed with valid data.");
+            }
+        }
+    }
+
 
 }

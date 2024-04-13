@@ -8,7 +8,6 @@ public class Event {
     private String name;
     private String description;
     private List<Attendee> attendees;
-
     private Venue venue;
 
     public Event(int id, String name, String description, Venue venue) {

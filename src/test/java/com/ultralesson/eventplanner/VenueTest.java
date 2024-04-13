@@ -11,8 +11,6 @@ public class VenueTest {
 //    private Venue venue;
 //    private Event event;
 //    private EventPlanner ep=new EventPlanner();
-
-
     @Test(groups = {"creation","venueCreation"}, priority = 3, testName = "test venue Creation",description = "")
     public void testVenueCreation(){
         Venue venue;

@@ -27,14 +27,14 @@ public class AttendeeTest {
         Assert.assertNotNull(attendee, "Attendee object should not be null.");
     }
 
-    @Test
+    @Test(groups = {"validation", "attendeeValidation"})
     public void testValidateAttendeeProperties() {
         Assert.assertEquals(attendee.getId(), 1, "Attendee ID should match.");
         Assert.assertEquals(attendee.getName(), "Om", "Attendee name should match.");
         Assert.assertEquals(attendee.getEmail(), "om.shinde@gmail.com", "Attendee email should match.");
     }
 
-    @Test
+    @Test(groups = {"management", "addAttendee"})
     public void testAddAttendeeToEvent() {
         Event event = new Event(1, "Test Event", "Description", new Venue(1, "Venue", "Address", 100));
         Attendee newAttendee = new Attendee(2, "New Attendee", "new.attendee@example.com");
@@ -42,14 +42,14 @@ public class AttendeeTest {
         Assert.assertTrue(event.getAttendees().contains(newAttendee), "Attendee should be added to the event.");
     }
 
-    @Test(expectedExceptions = IllegalArgumentException.class)
+    @Test(groups = {"management", "addAttendee"}, expectedExceptions = IllegalArgumentException.class)
     public void testAddInvalidAttendeeToEvent() {
         Event event = new Event(1, "Test Event", "Description", new Venue(1, "Venue", "Address", 100));
         Attendee invalidAttendee = new Attendee(3, null, ""); // Invalid attendee details
         event.addAttendee(invalidAttendee);
     }
 
-    @Test
+    @Test(groups = {"management", "removeAttendee"})
     public void testRemoveAttendeeFromEvent() {
         Event event = new Event(1, "Test Event", "Description", new Venue(1, "Venue", "Address", 100));
         Attendee attendeeToRemove = new Attendee(2, "Jane Doe", "jane.doe@example.com");
@@ -58,7 +58,7 @@ public class AttendeeTest {
         Assert.assertFalse(event.getAttendees().contains(attendeeToRemove), "Attendee should be removed from the event.");
     }
 
-    @Test
+    @Test(groups = {"management", "addAttendee"})
     public void testAddAttendeeToFullCapacityEvent() {
         Event event = new Event(1, "Full Capacity Event", "Description", new Venue(1, "Venue", "Address", 1));
         Attendee newAttendee = new Attendee(2, "New Attendee", "new.attendee@example.com");
@@ -66,7 +66,7 @@ public class AttendeeTest {
         Assert.assertTrue(event.getAttendees().contains(newAttendee), "Attendee should be added to the event even if it's at full capacity.");
     }
 
-    @Test
+    @Test(groups = {"management", "addAttendee"})
     public void testAddAttendeeToNullEvent() {
         Event event = null;
         Attendee newAttendee = new Attendee(1, "Om Shinde", "om.shinde@gmail.com");
@@ -78,7 +78,7 @@ public class AttendeeTest {
         }
     }
 
-    @Test
+    @Test(groups = {"management", "removeAttendee"})
     public void testRemoveNonExistingAttendeeFromEvent() {
         Event event = new Event(1, "Test Event", "Description", new Venue(1, "Venue", "Address", 100));
         Attendee nonExistingAttendee = new Attendee(999, "Non Existing Attendee", "nonexisting@example.com");
@@ -86,14 +86,15 @@ public class AttendeeTest {
         Assert.assertFalse(event.getAttendees().contains(nonExistingAttendee), "Removing non-existing attendee should not affect the attendee list.");
     }
 
-    @Test
+    @Test(groups = {"management", "addAttendee"})
     public void testAddAttendeeToEventSuccess() {
         Event event = new Event(1, "Conference", "Tech Conference", new Venue(1, "Conference Hall", "City Center", 100));
         Attendee newAttendee = new Attendee(10, "Alice Bryant", "alice.bryant@example.com");
         event.addAttendee(newAttendee);
         Assert.assertTrue(event.getAttendees().contains(newAttendee), "The attendee should be added to the event attendee list.");
     }
-    @Test(expectedExceptions = IllegalArgumentException.class)
+
+    @Test(groups = {"management", "addAttendee"}, expectedExceptions = IllegalArgumentException.class)
     public void testAddAttendeeWithInvalidDetailsToEvent() {
         Event event = new Event(2, "Workshop", "Coding Workshop", new Venue(2, "Workshop Space", "Tech Park", 50));
         Attendee invalidAttendee = new Attendee(11, null, "invalid@example.com"); // Invalid attendee details

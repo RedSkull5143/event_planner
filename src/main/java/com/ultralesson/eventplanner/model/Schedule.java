@@ -92,7 +92,6 @@ public class Schedule {
                 '}';
     }
     public boolean isValidstartTime(LocalDateTime startTime){
-        String stringStartTime=startTime.toString();
-        return true;
+        return startTime.isAfter(LocalDateTime.now());
     }
 }
